@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <title>Trading212 Portfolio Viewer</title>
+    <style>
+        /* General Styling */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #121212;
+            color: #C0C0C0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        h1,
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            color: #E0E0E0;
+            font-size: 2rem;
+        }
+
+        h2 {
+            color: #E0E0E0;
+            font-size: 1.5rem;
+        }
+
+        /* Logo Section */
+        .logo {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .logo h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #ffffff;
+        }
+
+        .logo h1 span {
+            color: #00aaff;
+        }
+
+        .logo p {
+            font-size: 1rem;
+            font-weight: 400;
+            color: #888888;
+        }
+
+        /* Form Container */
+        .container {
+            max-width: 400px;
+            width: 100%;
+            padding: 25px;
+            background-color: #1C1C1C;
+            border-radius: 10px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
+        }
+
+        .section-header {
+            font-size: 1.3rem;
+            font-weight: 500;
+            color: #E0E0E0;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        /* Input Fields */
+        label {
+            font-size: 0.9rem;
+            color: #888888;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        input[type="text"],
+        input[type="password"],
+        input[type="number"] {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            background-color: #1b1b1b;
+            border: 1px solid #333333;
+            border-radius: 6px;
+            color: #ffffff;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #00aaff;
+            background-color: #252525;
+        }
+
+        /* Button */
+        button {
+            width: 100%;
+            padding: 12px;
+            margin-top: 10px;
+            background-color: #00aaff;
+            color: #ffffff;
+            font-size: 1rem;
+            font-weight: 500;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #008fcc;
+            transform: translateY(-2px);
+        }
+
+        /* Portfolio Summary */
+        .summary-box {
+            margin: 20px 0;
+            background-color: #1C1C1C;
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 8px 0;
+            font-size: 1rem;
+        }
+
+        .summary-item span {
+            font-weight: 500;
+        }
+
+        .summary-item .positive {
+            color: #64FFDA;
+        }
+
+        .summary-item .negative {
+            color: #FF5252;
+        }
+
+        /* Footer */
+        footer {
+            margin-top: 20px;
+            text-align: center;
+            color: #888888;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 480px) {
+            body {
+                padding: 10px;
+            }
+
+            .container {
+                padding: 15px;
+            }
+
+            h1 {
+                font-size: 1.8rem;
+            }
+
+            h2 {
+                font-size: 1.2rem;
+            }
+
+            input,
+            button {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="logo">
+        <h1>TR<span>^</span>DING 212</h1>
+        <p>Build wealth every day</p>
+    </div>
+
+    <!-- Login Form -->
+    <div class="container" id="login-form">
+        <h2 class="section-header">Login</h2>
+        <label for="username">Email</label>
+        <input type="text" id="username" placeholder="Enter your email" aria-label="Enter your email">
+        <label for="password">Password</label>
+        <input type="password" id="password" placeholder="Enter your password" aria-label="Enter your password">
+        <button id="login-button">Log In</button>
+        <p id="message" style="color: #FF5252; text-align: center; font-size: 0.9rem;"></p>
+    </div>
+
+    <!-- Portfolio Section -->
+    <div id="portfolio-section" class="container" style="display: none;">
+        <h2 class="section-header">Portfolio Summary</h2>
+        <div class="summary-box">
+            <div class="summary-item">
+                <span>Invested:</span>
+                <span>€<span id="invested-amount">0.00</span></span>
+            </div>
+            <div class="summary-item">
+                <span>Return:</span>
+                <span class="positive">€<span id="return-amount">0.00</span> (<span
+                        id="return-percentage">0.00%</span>)</span>
+            </div>
+            <div class="summary-item">
+                <span>Portfolio Value:</span>
+                <span>€<span id="portfolio-value">0.00</span></span>
+            </div>
+        </div>
+        <canvas id="portfolio-chart" width="300" height="150"></canvas>
+    </div>
+
+    <!-- 2FA Section -->
+    <div id="2fa-section" class="container" style="display: none;">
+        <h2 class="section-header">Two-Factor Authentication</h2>
+        <label for="2fa-code">Enter 2FA Code</label>
+        <input type="text" id="2fa-code" placeholder="Enter 2FA code" required aria-label="Enter 2FA code">
+        <button id="2fa-button">Submit 2FA</button>
+        <p id="2fa-message" style="color: #FF5252; text-align: center; font-size: 0.9rem;"></p>
+    </div>
+
+    <footer>Version 1.0.0 &copy; 2024 Trading212</footer>
+
+    <script src="popup.js"></script>
+    <script src="lib/chart.min.js"></script> <!-- Include Chart.js -->
+</body>
+
+</html>
