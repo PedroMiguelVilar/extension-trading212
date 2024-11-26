@@ -5,9 +5,11 @@ browser.runtime.onMessage.addListener((request, sender, sendResponse) => {
 
     // Fetch Portfolio Data
     if (request.action === "fetchPortfolioData") {
+        const period = request.period || "LAST_DAY"; // Default to LAST_DAY if no period is provided
+
         (async () => {
             try {
-                const response = await fetch("https://live.services.trading212.com/rest/v2/portfolio?period=LAST_DAY", {
+                const response = await fetch(`https://live.services.trading212.com/rest/v2/portfolio?period=${period}`, {
                     method: "GET",
                     credentials: "include", // Ensures cookies are included
                     headers: { "Content-Type": "application/json" },
@@ -18,16 +20,17 @@ browser.runtime.onMessage.addListener((request, sender, sendResponse) => {
                 }
 
                 const data = await response.json();
-                console.log("Portfolio data fetched:", data);
+                console.log(`Portfolio data fetched for period ${period}:`, data);
                 sendResponse({ status: "SUCCESS", data });
             } catch (error) {
-                console.error("Error fetching portfolio data:", error);
+                console.error(`Error fetching portfolio data for period ${period}:`, error);
                 sendResponse({ status: "ERROR", message: "Failed to fetch portfolio data." });
             }
         })();
 
         return true; // Keeps the message channel open
     }
+
 
     // Login Action
     if (request.action === "login") {
@@ -42,13 +45,13 @@ browser.runtime.onMessage.addListener((request, sender, sendResponse) => {
                             "Accept": "application/json",
                             "Accept-Language": "en-US,en;q=0.5",
                             "Content-Type": "application/json",
-                            "X-Trader-Client": "application=WC4,version=7.51.1,dUUID=7aee0467-c46f-487a-955e-d3e9b22497db",
+                            "X-Trader-Client": "application=WC4,version=7.51.1,dUUID=20bf10dd-077d-4212-9ff9-c57b8ec3bb88",
                             "X-Trader-Device-Model": "Firefox",
                             "Origin": "https://app.trading212.com",
                             "Referer": "https://app.trading212.com/",
-                            "demo": "9648f01ee0fa2725a8674ae0446b96c8",
+                            "demo": "9b04de358699eb029c9b3f06f5acccf8",
                             "Cookie":
-                                "5d60904a5b52802c63d8b5b97bf8a1ea=%227aee0467-c46f-487a-955e-d3e9b22497db%22;",
+                                "5d60904a5b52802c63d8b5b97bf8a1ea=%2220bf10dd-077d-4212-9ff9-c57b8ec3bb88%22;",
                         },
                         body: JSON.stringify({
                             username: request.username,
@@ -68,6 +71,17 @@ browser.runtime.onMessage.addListener((request, sender, sendResponse) => {
                         message: "Two-factor authentication is required.",
                     });
                 } else if (loginResponse.ok) {
+                    const loginState = {
+                        isAuthenticated: true,
+                        username: request.username,
+                        sessionCookies: document.cookie,
+                        timestamp: Date.now(), // Save timestamp for session expiry logic
+                    };
+
+                    await browser.storage.local.set({ loginState });
+
+                    console.log("Login state saved to storage:", loginState);
+
                     sendResponse({
                         status: "SUCCESS",
                         message: "Login successful!",
@@ -104,6 +118,7 @@ browser.runtime.onMessage.addListener((request, sender, sendResponse) => {
                         rememberDevice: false,
                     },
                 };
+                console.log(loginBody);
 
                 const loginResponse = await fetch(
                     "https://live.services.trading212.com/rest/v4/login?skipVersionCheck=false",
@@ -114,13 +129,13 @@ browser.runtime.onMessage.addListener((request, sender, sendResponse) => {
                             "Accept": "application/json",
                             "Accept-Language": "en-US,en;q=0.5",
                             "Content-Type": "application/json",
-                            "X-Trader-Client": "application=WC4,version=7.51.1,dUUID=7aee0467-c46f-487a-955e-d3e9b22497db",
+                            "X-Trader-Client": "application=WC4,version=7.51.1,dUUID=20bf10dd-077d-4212-9ff9-c57b8ec3bb88",
                             "X-Trader-Device-Model": "Firefox",
                             "Origin": "https://app.trading212.com",
                             "Referer": "https://app.trading212.com/",
-                            "demo": "9648f01ee0fa2725a8674ae0446b96c8",
-                            "Cookie":
-                                "5d60904a5b52802c63d8b5b97bf8a1ea=%227aee0467-c46f-487a-955e-d3e9b22497db%22;",
+                            demo: "9b04de358699eb029c9b3f06f5acccf8",
+                            Cookie:
+                                '5d60904a5b52802c63d8b5b97bf8a1ea=%2220bf10dd-077d-4212-9ff9-c57b8ec3bb88%22;',
                         },
                         body: JSON.stringify(loginBody),
                     }
@@ -129,12 +144,25 @@ browser.runtime.onMessage.addListener((request, sender, sendResponse) => {
                 const loginData = await loginResponse.json();
 
                 if (loginResponse.ok) {
+                    const loginState = {
+                        isAuthenticated: true,
+                        username: request.username,
+                        sessionCookies: document.cookie,
+                        timestamp: Date.now(), // Save timestamp for session expiry logic
+                    };
+
+                    await browser.storage.local.set({ loginState });
+
+                    console.log("Login state saved to storage:", loginState);
+
+
                     sendResponse({
                         status: "SUCCESS",
-                        message: "2FA verification successful!",
+                        message: "Login successful!",
                         data: loginData,
                     });
-                } else {
+                }
+                else {
                     console.error("2FA verification failed:", loginData);
                     sendResponse({
                         status: "ERROR",

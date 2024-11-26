@@ -7,7 +7,7 @@
         "storage"
     ],
     "host_permissions": [
-        "*://live.services.trading212.com/*"
+        "://live.services.trading212.com/"
     ],
     "background": {
         "scripts": [

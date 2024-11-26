@@ -45,7 +45,7 @@
         /* Logo Section */
         .logo {
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 10px;
         }
 
         .logo h1 {
@@ -151,7 +151,7 @@
         }
 
         .summary-item .positive {
-            color: #64FFDA;
+            color: #00b4d8;
         }
 
         .summary-item .negative {
@@ -189,6 +189,75 @@
                 font-size: 0.9rem;
             }
         }
+
+        .summary-box {
+            display: flex;
+            flex-direction: column;
+            padding: 15px;
+            border-radius: 8px;
+            color: #fff;
+            /* White text */
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+        }
+
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        #portfolio-value {
+            font-size: 24px;
+            /* Larger portfolio value */
+            font-weight: bold;
+        }
+
+        #return-amount,
+        #return-percentage {
+            font-size: 16px;
+            /* Larger return values */
+        }
+
+        .positive {
+            color: #22c55e;
+            /* Green for positive values */
+        }
+
+        .negative {
+            color: #ef4444;
+            /* Red for negative values */
+        }
+
+        .time-period-buttons {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+        }
+
+        .time-period-button {
+            background-color: #1C1C1C;
+            color: #C0C0C0;
+            border: 1px solid #333;
+            border-radius: 6px;
+            padding: 8px 12px;
+            margin: 0 5px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .time-period-button:hover {
+            background-color: #00aaff;
+            color: #fff;
+        }
+
+        .time-period-button.active {
+            background-color: #00aaff;
+            color: #fff;
+            border-color: #007bbf;
+        }
     </style>
 </head>
 
@@ -216,19 +285,30 @@
         <div class="summary-box">
             <div class="summary-item">
                 <span>Invested:</span>
-                <span>€<span id="invested-amount">0.00</span></span>
+                <span id="invested-amount">0.00</span>
             </div>
             <div class="summary-item">
                 <span>Return:</span>
-                <span class="positive">€<span id="return-amount">0.00</span> (<span
+                <span class="positive"><span id="return-amount">0.00</span> (<span
                         id="return-percentage">0.00%</span>)</span>
             </div>
             <div class="summary-item">
                 <span>Portfolio Value:</span>
-                <span>€<span id="portfolio-value">0.00</span></span>
+                <span><span id="portfolio-value">0.00</span></span>
             </div>
         </div>
         <canvas id="portfolio-chart" width="300" height="150"></canvas>
+
+        <!-- Time Period Buttons -->
+        <div class="time-period-buttons">
+            <button class="time-period-button" data-period="LAST_DAY">1D</button>
+            <button class="time-period-button" data-period="LAST_WEEK">1W</button>
+            <button class="time-period-button" data-period="LAST_MONTH">1M</button>
+            <button class="time-period-button" data-period="LAST_THREE_MONTHS">3M</button>
+            <button class="time-period-button" data-period="LAST_YEAR">1Y</button>
+            <button class="time-period-button" data-period="ALL">MAX</button>
+        </div>
+
     </div>
 
     <!-- 2FA Section -->
