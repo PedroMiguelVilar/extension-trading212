@@ -22,14 +22,14 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            min-height: 100vh;
+            min-height: 100%;
             padding: 20px;
+            max-width: 500px;
         }
 
         h1,
         h2 {
             text-align: center;
-            margin-bottom: 20px;
         }
 
         h1 {
@@ -158,13 +158,6 @@
             color: #FF5252;
         }
 
-        /* Footer */
-        footer {
-            margin-top: 20px;
-            text-align: center;
-            color: #888888;
-            font-size: 0.9rem;
-        }
 
         /* Responsive Design */
         @media (max-width: 480px) {
@@ -258,6 +251,240 @@
             color: #fff;
             border-color: #007bbf;
         }
+
+        /* Adjust styles for 2FA container */
+        .fa2-section {
+            max-width: 400px;
+            /* Same as login form */
+            width: 100%;
+            /* Responsive to screen size */
+            padding: 25px;
+            /* Same padding */
+            background-color: #1C1C1C;
+            /* Same background */
+            border-radius: 10px;
+            /* Same border radius */
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
+            /* Same shadow */
+            margin: 0 auto;
+            /* Center align */
+        }
+
+        /* Adjust styles for the 2FA inputs inside the container */
+        .fa2-input-container {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            /* Space out the inputs */
+            align-items: center;
+            /* Vertically align inputs */
+            gap: 5px;
+            /* Moderate gap between inputs */
+            padding: 10px 0;
+            /* Add some internal spacing */
+        }
+
+        .fa2-input {
+            width: 45px;
+            /* Slightly smaller width */
+            height: 60px;
+            /* Reduced horizontal margin */
+            text-align: center;
+            font-size: 1.2rem;
+            /* Adjusted font size */
+            background-color: #1b1b1b;
+            border: 1px solid #333333;
+            border-radius: 6px;
+            color: #ffffff;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+
+        .fa2-input:focus {
+            border-color: #00aaff;
+            background-color: #252525;
+        }
+
+        .fa2-button {
+            width: 100%;
+            /* Same as login button */
+            padding: 12px;
+            margin-top: 10px;
+            background-color: #00aaff;
+            color: #ffffff;
+            font-size: 1rem;
+            font-weight: 500;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .fa2-button:hover {
+            background-color: #008fcc;
+            transform: translateY(-2px);
+        }
+
+        .fa2-message {
+            color: #FF5252;
+            /* Error message color */
+            text-align: center;
+            font-size: 0.9rem;
+        }
+
+
+        /* Container for the switch and label */
+        .toggle-switch-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 20px;
+            font-size: 14px;
+            font-weight: 500;
+            color: #C0C0C0;
+        }
+
+        .toggle-label {
+            margin-left: 10px;
+            cursor: pointer;
+        }
+
+        /* The switch container */
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 42px;
+            height: 22px;
+        }
+
+        /* Hide the checkbox (used for state) */
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        /* The slider */
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #1C1C1C;
+            border: 1px solid #333333;
+            border-radius: 22px;
+            /* Match the height for a perfect circle */
+            transition: 0.4s;
+        }
+
+        /* The circle inside the slider */
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            /* Slightly smaller than the slider height */
+            width: 16px;
+            /* Make it perfectly circular */
+            left: 3px;
+            /* Center it horizontally inside the slider */
+            top: 2px;
+            /* Slightly raise the ball (was 3px) */
+            background-color: #ffffff;
+            border-radius: 50%;
+            transition: 0.4s;
+        }
+
+
+        /* On state */
+        input:checked+.slider {
+            background-color: #00aaff;
+        }
+
+        input:checked+.slider:before {
+            transform: translateX(20px);
+            /* Adjust for the new width of the slider */
+        }
+
+        .card-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .card {
+            font-size: 12px;
+            flex: 1 1 calc(50% - 16px);
+            /* Each card takes 50% width minus gap */
+            box-sizing: border-box;
+            /* Include padding and border in width */
+            background-color: #1C1C1C;
+            border: 1px solid #333;
+            border-radius: 10px;
+            padding: 15px 20px;
+            width: 200px;
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.3s, background-color 0.3s;
+
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            background-color: #00aaff;
+            color: #fff;
+        }
+
+        .back-button {
+            background-color: #1C1C1C;
+            color: #C0C0C0;
+            border: 1px solid #333;
+            border-radius: 6px;
+            padding: 10px 15px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-bottom: 20px;
+            display: block;
+            text-align: center;
+            width: fit-content;
+        }
+
+        .back-button:hover {
+            background-color: #00aaff;
+            color: #fff;
+        }
+
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .card-icon {
+            width: 24px;
+            height: 24px;
+            color: #007bff;
+            /* Customize icon color */
+        }
+
+        .logout-btn {
+            margin-top: 20px;
+            background-color: #ff4d4d;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .logout-btn:hover {
+            background-color: #e03c3c;
+        }
     </style>
 </head>
 
@@ -279,8 +506,59 @@
         <p id="message" style="color: #FF5252; text-align: center; font-size: 0.9rem;"></p>
     </div>
 
+
+    <!-- 2FA Section -->
+    <div id="fa2-section" class="container" style="display: none;">
+        <h2 class="section-header">Two-Factor Authentication</h2>
+        <div class="fa2-input-container">
+            <input type="text" class="fa2-input" maxlength="1" aria-label="First digit">
+            <input type="text" class="fa2-input" maxlength="1" aria-label="Second digit">
+            <input type="text" class="fa2-input" maxlength="1" aria-label="Third digit">
+            <input type="text" class="fa2-input" maxlength="1" aria-label="Fourth digit">
+            <input type="text" class="fa2-input" maxlength="1" aria-label="Fifth digit">
+            <input type="text" class="fa2-input" maxlength="1" aria-label="Sixth digit">
+        </div>
+        <button id="fa2-button">Submit 2FA</button>
+        <p id="fa2-message" style="color: #FF5252; text-align: center; font-size: 0.9rem;"></p>
+    </div>
+
+
+    <!-- Menu Section -->
+    <div id="menu-section" class="container" style="display: none;">
+        <h2 class="section-header">Menu</h2>
+        <div class="card-container">
+            <!-- Portfolio Card -->
+            <div class="card" data-feature="portfolio">
+                <div class="card-header">
+                    <svg class="card-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M3 12h3l3-9 4 16 4-12 3 5h4"></path>
+                    </svg>
+                    <h3>Portfolio Value</h3>
+                </div>
+                <p>View your portfolio's performance over time.</p>
+            </div>
+            <!-- Future Feature Card -->
+            <div class="card" data-feature="future-feature">
+                <div class="card-header">
+                    <h3>Future Feature</h3>
+                </div>
+                <p>Placeholder for new functionality.</p>
+            </div>
+            <!-- Add more cards for future features -->
+        </div>
+        <button id="logout-button" class="logout-btn">Logout</button>
+    </div>
+
+
+
+
+
+
     <!-- Portfolio Section -->
     <div id="portfolio-section" class="container" style="display: none;">
+        <button id="back-to-menu" class="back-button">Back to Menu</button>
         <h2 class="section-header">Portfolio Summary</h2>
         <div class="summary-box">
             <div class="summary-item">
@@ -289,14 +567,26 @@
             </div>
             <div class="summary-item">
                 <span>Return:</span>
-                <span class="positive"><span id="return-amount">0.00</span> (<span
-                        id="return-percentage">0.00%</span>)</span>
+                <span class="positive">
+                    <span id="return-amount">0.00</span> (<span id="return-percentage">0.00%</span>)
+                </span>
             </div>
             <div class="summary-item">
                 <span>Portfolio Value:</span>
                 <span><span id="portfolio-value">0.00</span></span>
             </div>
         </div>
+
+        <!-- Cumulative Toggle Switch -->
+        <div class="toggle-switch-container">
+            <label class="toggle-switch">
+                <input type="checkbox" id="toggle-cumulative" class="toggle-checkbox">
+                <span class="slider"></span>
+            </label>
+            <label for="toggle-cumulative" class="toggle-label">Use Cumulative Data</label>
+        </div>
+
+
         <canvas id="portfolio-chart" width="300" height="150"></canvas>
 
         <!-- Time Period Buttons -->
@@ -308,22 +598,14 @@
             <button class="time-period-button" data-period="LAST_YEAR">1Y</button>
             <button class="time-period-button" data-period="ALL">MAX</button>
         </div>
-
     </div>
 
-    <!-- 2FA Section -->
-    <div id="2fa-section" class="container" style="display: none;">
-        <h2 class="section-header">Two-Factor Authentication</h2>
-        <label for="2fa-code">Enter 2FA Code</label>
-        <input type="text" id="2fa-code" placeholder="Enter 2FA code" required aria-label="Enter 2FA code">
-        <button id="2fa-button">Submit 2FA</button>
-        <p id="2fa-message" style="color: #FF5252; text-align: center; font-size: 0.9rem;"></p>
-    </div>
 
-    <footer>Version 1.0.0 &copy; 2024 Trading212</footer>
 
-    <script src="popup.js"></script>
+    <script type="module" src="js/main.js"></script>
     <script src="lib/chart.min.js"></script> <!-- Include Chart.js -->
+    <script src="lib/chartjs-plugin-zoom.min.js"></script> <!-- Include Chart.js Zoom plugin-->
+
 </body>
 
 </html>

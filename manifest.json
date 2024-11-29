@@ -7,7 +7,7 @@
         "storage"
     ],
     "host_permissions": [
-        "://live.services.trading212.com/"
+        "*://live.services.trading212.com/*"
     ],
     "background": {
         "scripts": [
@@ -21,7 +21,8 @@
     "web_accessible_resources": [
         {
             "resources": [
-                "lib/chart.min.js"
+                "lib/chart.min.js",
+                "js/*.js"
             ],
             "matches": [
                 "<all_urls>"
